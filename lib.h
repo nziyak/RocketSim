@@ -200,5 +200,53 @@ public:
         q.Normalize();
         return q;
     }
-    
+
+    //iki duruş arasında düzgün geç
+    static Quaternion Slerp(const Quaternion& a, const Quaternion& b, float t)
+    {
+        //measure the angle between them
+        float dot = a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w;
+
+        Quaternion bb = b;
+
+        //choose the shorter path
+        if (dot < 0.0f)
+        {
+            dot = -dot;
+            bb.x = -bb.x;
+            bb.y = -bb.y;
+            bb.z = -bb.z;
+            bb.w = -bb.w;
+        }
+
+        //if distance is so close Lerp is enough
+         if (dot > 0.9995f)
+        {
+            Quaternion result(
+                a.x + t*(bb.x - a.x),
+                a.y + t*(bb.y - a.y),
+                a.z + t*(bb.z - a.z),
+                a.w + t*(bb.w - a.w)
+            );
+            result.Normalize();
+            return result;
+        }
+
+        //real slerp(yay üzerinde)
+        float theta0 = acos(dot);
+        float theta  = theta0 * t;
+
+        float sinTheta  = sin(theta);
+        float sinTheta0 = sin(theta0);
+
+        float s0 = cos(theta) - dot * sinTheta / sinTheta0;
+        float s1 = sinTheta / sinTheta0;
+
+        return Quaternion(
+            a.x*s0 + bb.x*s1,
+            a.y*s0 + bb.y*s1,
+            a.z*s0 + bb.z*s1,
+            a.w*s0 + bb.w*s1
+        );
+    }
 };
