@@ -53,7 +53,7 @@ public:
         return (x * v2.x) + (y * v2.y) + (z * v2.z);
     }
 
-    Vector3 CrossProduct(const Vector3 &v2) const
+    Vector3 Cross(const Vector3 &v2) const
     {
         return Vector3(
             ((y * v2.z) - (z * v2.y)),
@@ -141,5 +141,63 @@ public:
         uuv = uuv * 2.0f;
 
         return v + uv + uuv;
+    }
+
+    //let object look at that direction
+    //first creates a coordinate system
+    //then packages that into a quaternion 
+    //because it's a more stabilized storage method
+    static Quaternion LookRotation(const Vector3& forward)
+    {
+        Vector3 f = forward.Normalized();
+
+        //dünya yukarısı -simple version-
+        Vector3 up(0,1,0);
+
+        //sağ ekseni çıkar
+        Vector3 right = up.Cross(f).Normalized();
+
+        //up'ı tekrar ortogonal yap
+        up = f.Cross(right);
+
+        //now we have 3 perpendicular axices
+        //right(x), up(y), forward(z)
+        //that means a rotation matrix
+        float m00 = right.x, m01 = right.y, m02 = right.z;
+        float m10 = up.x, m11 = up.y, m12 = up.z;
+        float m20 = f.x, m21 = f.y, m22 = f.z;
+
+        float trace = m00 + m11 + m22;//representation of the rotation of that matrix with least error 
+        //trace greater -> rotation angle is less
+        //trace = 1 + 2cos(angle)
+        //also w of the quaternion is w = (angle/2)
+        //w is greater if angle is less
+        //we take the component of the quaternion that is big as reference
+        Quaternion q;
+
+        if(trace > 0.0f)
+        {
+            float s = sqrt(trace + 1.0f) * 2.0f;
+            //comes from s = 4*w
+            //and w = 0.5*sqrt(trace+1)
+            q.w = 0.25f * s;
+            //and these are coming from
+            //antisymmetric parts of the matrix
+            //means "which axis it rotated around?"
+            //cross differences in the matrix carries the direction of the rotation axis
+            //and we normalize with s to not break the scale
+            //we divide to sin because x,y,z axices of the quaternion are proportional with s
+            //we divide by s to convert the full angle info to half angle info that quaternion needs
+            q.x = (m21 - m12) / s; 
+            q.y = (m02 - m20) / s;
+            q.z = (m10 - m01) / s;
+        }
+        else
+        {
+            q = Quaternion();
+        }
+
+        q.Normalize();
+        return q;
     }
 };
