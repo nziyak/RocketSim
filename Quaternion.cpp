@@ -8,10 +8,18 @@ Quaternion::Quaternion() : x(0), y(0), z(0), w(1) {}
 Quaternion::Quaternion(float _x, float _y, float _z, float _w)
     : x(_x), y(_y), z(_z), w(_w) {}
 
+// To avoid drift caused by the quaternion magnitude deviating from 1,
+// we must normalize the quaternion.
+//
+// This drift can be caused by several factors:
+// - Floating point precision errors
+// - Repeated quaternion multiplications (numerical integration)
+// - Trigonometric approximations
 void Quaternion::Normalize()
 {
     float mag = sqrt(x * x + y * y + z * z + w * w);
 
+    // Safety check to avoid division by zero
     if (mag < 0.00001f)
         return;
 
@@ -20,6 +28,12 @@ void Quaternion::Normalize()
     z /= mag;
     w /= mag;
 }
+
+// If we do not normalize, the aircraft (or object) may slowly bend,
+// rotate incorrectly, or behave unpredictably over time.
+// Quaternions should be normalized especially after quaternion
+// multiplications, not necessarily every frame, but very frequently.
+
 
 // rotate around an axis by angleDegrees
 Quaternion Quaternion::AngleAxis(Vector3 axis, float angleDegrees)
