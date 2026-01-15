@@ -47,7 +47,7 @@
 
 - [d] **Step 4: Numerical Integration (Euler)**
     - [d] Update Velocity: $v_{new} = v_{old} + a \cdot dt$.
-    - [] Update Position: $p_{new} = p_{old} + v_{new} \cdot dt$.
+    - [d] Update Position: $p_{new} = p_{old} + v_{new} \cdot dt$.
 
 - [d] **Step 5: Spin Stabilization**
     - [d] Define turn speed (e.g., 360 degrees/sec).
