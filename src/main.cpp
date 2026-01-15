@@ -1,9 +1,9 @@
 #include <fstream>
 #include <iostream>
 
-#include "Vector3.h"
-#include "Quaternion.h"
-#include "Rocket.h"
+#include "Vector3.cpp"
+#include "Quaternion.cpp"
+#include "Rocket.cpp"
 
 using namespace std;
 

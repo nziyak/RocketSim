@@ -1,6 +1,6 @@
-#include "Vector3.h"
-#include "Quaternion.h"
-#include "Rocket.h"
+#include "../include/Vector3.h"
+#include "../include/Quaternion.h"
+#include "../include/Rocket.h"
 
 void Rocket::Update(float dt)
 {
