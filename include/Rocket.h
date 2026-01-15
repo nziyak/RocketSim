@@ -9,6 +9,13 @@ class Rocket
 {
     public:
 
+        Rocket(float x, float y, float z)
+        {
+            position.x = x;
+            position.y = y;
+            position.z = z;
+        }
+
         // state variables
         Vector3 position; //global position (m)
         Vector3 velocity; //global velocity (m/s)
