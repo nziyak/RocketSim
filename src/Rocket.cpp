@@ -28,6 +28,7 @@ void Rocket::Update(float dt)
 
     // acceleration
     Vector3 acceleration = TotalForce * (1.0f / mass);
+    lastAcceleration = acceleration; // save the last acceleration
 
     // update velocity and position with Euler integration
     velocity += acceleration * dt;

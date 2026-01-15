@@ -11,6 +11,7 @@ public:
 
     void Normalize();
 
+    static Quaternion Identity();
     static Quaternion AngleAxis(Vector3 axis, float angleDegrees);
     static Quaternion LookRotation(const Vector3& forward);
     static Quaternion Slerp(const Quaternion& a, const Quaternion& b, float t);
