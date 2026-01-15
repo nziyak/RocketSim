@@ -3,56 +3,56 @@
 ## Phase 1: The Mathematical Foundation (No External Libraries)
 *Objective: Build the tools required to calculate physics in 3D space.*
 
-- [ ] **Implement `Vector3` Struct**
-    - [ ] Store `x`, `y`, `z` (floats).
-    - [ ] Implement Operator Overloading (`+`, `-`, `*` scalar).
-    - [ ] Implement `DotProduct`.
-    - [ ] [cite_start]Implement `CrossProduct`[cite: 225, 232].
-    - [ ] Implement `Magnitude` and `Normalize` functions.
+- [d] **Implement `Vector3` Class**
+    - [d] Store `x`, `y`, `z` (floats).
+    - [d] Implement Operator Overloading (`+`, `-`, `*` scalar).
+    - [d] Implement `DotProduct`.
+    - [d] [cite_start]Implement `CrossProduct`.
+    - [d] Implement `Magnitude` and `Normalize` functions.
 
-- [ ] **Implement `Quaternion` Struct**
-    - [ ] Store `x`, `y`, `z`, `w`.
-    - [ ] Implement `AngleAxis(angle, axis)` static function for creating rotations.
-    - [ ] Implement `RotateVector(vector)`: Logic to rotate a vector using the quaternion.
-    - [ ] Implement Operator Overloading (`*`) for combining rotations.
+- [d] **Implement `Quaternion` Class**
+    - [d] Store `x`, `y`, `z`, `w`.
+    - [d] Implement `AngleAxis(angle, axis)` static function for creating rotations.
+    - [d] Implement `RotateVector(vector)`: Logic to rotate a vector using the quaternion.
+    - [d] Implement Operator Overloading (`*`) for combining rotations.
 
 ## Phase 2: The Physics Engine Core
 *Objective: Create the Rocket object and define its physical properties.*
 
-- [ ] **Create `Rocket` Class**
-    - [ ] Define State Variables: `position`, `velocity`, `orientation` (Quaternion).
-    - [ ] Define Constants:
-        - [ ] Mass ($m = 50.0$ kg)
-        - [ ] Area ($A = 0.1$ $m^2$)
-        - [ ] Drag Coefficient ($C_d = 0.5$)
-        - [ ] Thrust ($F_{thrust} = 2000.0$ N)
-    - [ ] Define `Update(float dt)` method signature.
+- [d] **Create `Rocket` Class**
+    - [d] Define State Variables: `position`, `velocity`, `orientation` (Quaternion).
+    - [d] Define Constants:
+        - [d] Mass ($m = 50.0$ kg)
+        - [d] Area ($A = 0.1$ $m^2$)
+        - [d] Drag Coefficient ($C_d = 0.5$)
+        - [d] Thrust ($F_{thrust} = 2000.0$ N)
+    - [d] Define `Update(float dt)` method signature.
 
 ## Phase 3: Simulation Logic (The Update Loop)
 *Objective: Implement the physics math inside the `Update` function.*
 
-- [ ] **Step 1: Coordinate Transformation (Local -> Global)**
-    - [ ] Calculate `ThrustVector`.
-    - [ ] Logic: Rotate the local "Up" vector `(0, 1, 0)` by the rocket's current `orientation` quaternion.
+- [d] **Step 1: Coordinate Transformation (Local -> Global)**
+    - [d] Calculate `ThrustVector`.
+    - [d] Logic: Rotate the local "Up" vector `(0, 1, 0)` by the rocket's current `orientation` quaternion.
 
-- [ ] **Step 2: Force Calculation**
-    - [ ] [cite_start]Calculate Gravity Vector ($F_g = m \cdot g$ downward)[cite: 154].
-    - [ ] Calculate Aerodynamic Drag Vector ($F_{drag}$):
-        - [ ] [cite_start]Formula: $-\frac{1}{2} \cdot \rho \cdot v^2 \cdot C_d \cdot A$[cite: 730].
-        - [ ] Ensure drag acts in the opposite direction of velocity.
+- [d] **Step 2: Force Calculation**
+    - [d] [cite_start]Calculate Gravity Vector ($F_g = m \cdot g$ downward).
+    - [d] Calculate Aerodynamic Drag Vector ($F_{drag}$):
+        - [d] [cite_start]Formula: $-\frac{1}{2} \cdot \rho \cdot v^2 \cdot C_d \cdot A$.
+        - [d] Ensure drag acts in the opposite direction of velocity.
 
-- [ ] **Step 3: Newton's Second Law**
-    - [ ] [cite_start]Sum all forces: $F_{net} = F_{thrust} + F_{gravity} + F_{drag}$[cite: 74].
-    - [ ] Calculate Acceleration: $a = F_{net} / m$.
+- [d] **Step 3: Newton's Second Law**
+    - [d] [cite_start]Sum all forces: $F_{net} = F_{thrust} + F_{gravity} + F_{drag}$[cite: 74].
+    - [d] Calculate Acceleration: $a = F_{net} / m$.
 
-- [ ] **Step 4: Numerical Integration (Euler)**
-    - [ ] Update Velocity: $v_{new} = v_{old} + a \cdot dt$.
-    - [ ] Update Position: $p_{new} = p_{old} + v_{new} \cdot dt$.
+- [d] **Step 4: Numerical Integration (Euler)**
+    - [d] Update Velocity: $v_{new} = v_{old} + a \cdot dt$.
+    - [] Update Position: $p_{new} = p_{old} + v_{new} \cdot dt$.
 
-- [ ] **Step 5: Spin Stabilization**
-    - [ ] Define turn speed (e.g., 360 degrees/sec).
-    - [ ] Create a "spin" quaternion representing the incremental rotation for this frame.
-    - [ ] Update `orientation`: Multiply current orientation by the spin quaternion.
+- [d] **Step 5: Spin Stabilization**
+    - [d] Define turn speed (e.g., 360 degrees/sec).
+    - [d] Create a "spin" quaternion representing the incremental rotation for this frame.
+    - [d] Update `orientation`: Multiply current orientation by the spin quaternion.
 
 ## Phase 4: Mission Control (Main Loop)
 *Objective: Manage the flight stages and data recording.*

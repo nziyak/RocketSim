@@ -23,17 +23,19 @@ void Rocket::Update(float dt)
         AeroDrag = dragDir * (-dragMag);
     }
 
-    // total force
+    // total force (Newton's second law)
     Vector3 TotalForce = ThrustVector + GravityVector + AeroDrag;
 
     // acceleration
     Vector3 acceleration = TotalForce * (1.0f / mass);
 
-    // Euler integration
+    // update velocity and position with Euler integration
     velocity += acceleration * dt;
+    position += velocity * dt;
 
     //spin stabilization
-    float turnSpeed = 360.0f;
+    float turnSpeed = 360.0f; 
+    //incremental rotation for this frame
     Quaternion spin = Quaternion::AngleAxis(Vector3(0,1,0), turnSpeed * dt);
     
     orientation = orientation * spin;
